@@ -20,7 +20,7 @@
             var good1 = new Good(123, 'Клавиатура для ПК', 800);
             good1.render($goods);
 
-            var good2 = new Good(124, 'Мышь для ПК', 700);
+            var good2 = new Good(124, 'Мышь для ПК1', 700);
             good2.render($goods);
 
             //Корзина
@@ -32,6 +32,13 @@
                 var idProduct = parseInt($(this).attr('data-id'));
                 var price = parseInt($(this).parent().find('span.product-price').text());
                 basket.add(idProduct, price);
+            });
+
+            //Удаление товара из корзины
+            $('.good-delete').on('click', function () {
+                var idProduct = parseInt($(this).attr('data-id'));
+                var price = parseInt($(this).parent().find('span.product-price').text());
+                basket.remove(idProduct, price);
             });
         });
     </script>

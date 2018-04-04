@@ -79,6 +79,36 @@ Basket.prototype.refresh = function () {
 //ДЗ
 Basket.prototype.remove = function (idProduct) {
   //TODO: Удаление товара из корзины
-    //splice
-  this.refresh();
+  let goodNumber = this.find(idProduct);
+
+    if(goodNumber) {
+      this.basketItems.splice(goodNumber, 1);
+      let result = this.summa(idProduct);
+      this.amount = result[1];
+      this.countGoods = result[0];
+    }
+
+  this.refresh(); //Перерисовка корзины
+};
+
+Basket.prototype.find = function (id) {
+  let number = false;
+
+    this.basketItems.forEach(function(product, index) {
+      if(product.id_product === id) {
+        number = index;
+      }
+    });
+  return number;
+};
+
+Basket.prototype.summa = function () {
+  let goodCount = 0;
+  let goodSumma = 0;
+
+    this.basketItems.forEach(function(element) {
+      ++goodCount;
+      goodSumma += element.price;
+    });
+  return [goodCount, goodSumma];
 };

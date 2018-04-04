@@ -22,11 +22,17 @@ Good.prototype.render = function ($containerGood) {
     });
 
     //TODO: Создать кнопку для удаления товара
+    var $goodBtnDelete = $('<button />', {
+        class: 'good-delete',
+        text: 'Удалить из корзины',
+        'data-id': this.id
+    });
 
     //Создаем структуру
     $goodTitle.appendTo($goodContainer);
     $goodPrice.appendTo($goodContainer);
     $goodBtnAdd.appendTo($goodContainer);
+    $goodBtnDelete.appendTo($goodContainer);
 
     $containerGood.append($goodContainer);
 };
