@@ -2,7 +2,7 @@ var array = [];
 $.ajax({
     type: 'GET',
     url: './reviews.json',
-    // async: false, //Запрос синхронный
+    async: false, //Запрос синхронный
     dataType: 'json',
     context: this,
     success: function (data) {
