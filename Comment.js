@@ -1,8 +1,42 @@
+var array = [];
+$.ajax({
+    type: 'GET',
+    url: './reviews.json',
+    // async: false, //Запрос синхронный
+    dataType: 'json',
+    context: this,
+    success: function (data) {
+      if (data.result === 1) {
+
+        // var myGallery = JSON.parse(data);
+        array = data.comments;
+        // console.log(array);
+        
+      }
+    }
+});
+
+
+// xhr.open('POST', requestAddress, false); //false - Синхронный запрос
+// xhr.send();
+// if(xhr.status !== 200)
+// {
+//     console.log('Error', xhr.status, xhr.statusText);
+// } else {
+//     var data = xhr.responseText;
+//     // console.log('ok', data);
+//     var myGallery = JSON.parse(data);
+// }
+
+
 function Comment(idReviews) {
     this.id = idReviews;  // Первая часть идентификатора тегов
     this.idDivForReviews = 'reviews'; // Идентификатор дива в который вставляются комментарии
     this.commentsArray = []; //Массив для хранения комментариев
-    this.getReviews(); //Получаем уже добавленные на сайт комментарии
+    // this.getReviews(); //Получаем уже добавленные на сайт комментарии
+    // console.log(array);
+    this.reviewsArray(array); //
+
 }
 
 /**
@@ -70,22 +104,25 @@ Comment.prototype.render = function ($root) {
   $root.append('<hr />');
   $root.append('Отзывы: </p>');
   $reviewsDiv.appendTo($root);
+
+  this.showReviews();
 };
 
-Comment.prototype.getReviews = function () {
-    $.ajax({
-        type: 'GET',
-        url: './reviews.json',
-        dataType: 'json',
-        context: this,
-        success: function (data) {
-          if (data.result === 1) {
-            this.reviewsArray(data.comments);
-            this.showReviews();
-          }
-        }
-    });
-};
+// Comment.prototype.getReviews = function () {
+//     $.ajax({
+//         type: 'GET',
+//         url: './reviews.json',
+//         // async: false, //Запрос синхронный
+//         dataType: 'json',
+//         context: this,
+//         success: function (data) {
+//           if (data.result === 1) {
+//             this.reviewsArray(data.comments);
+//             this.showReviews();
+//           }
+//         }
+//     });
+// };
 
 Comment.prototype.reviewsArray = function (reviews) {
     for (let itemKey in reviews)
@@ -125,15 +162,15 @@ Comment.prototype.showReviews = function () {
     });
     $dataDiv.appendTo(appendId);
 
-      $('.comment-delete').on('click', function () {
-          alert('Как определить обработчик событий для ' 
-            + 'этой кнопки(удаление) в файле index.html?');
-          // this.remove(124);
-      });
-    $('.comment-approve').on('click', function () {
-        alert('Как определить обработчик событий для ' 
-          + 'этой кнопки(одобрение) в файле index.html?');
-    });
+    //   $('.comment-delete').on('click', function () {
+    //       alert('Как определить обработчик событий для ' 
+    //         + 'этой кнопки(удаление) в файле index.html?');
+    //       // this.remove(124);
+    //   });
+    // $('.comment-approve').on('click', function () {
+    //     alert('Как определить обработчик событий для ' 
+    //       + 'этой кнопки(одобрение) в файле index.html?');
+    // });
 };
 
 Comment.prototype.findIndComment = function () {
@@ -180,6 +217,9 @@ Comment.prototype.find = function (id) {
 };
 
 Comment.prototype.approve = function (id) {
+
+    console.log(this.commentsArray);
+
   let commentIdForApprove = this.find(id);
 
     if(commentIdForApprove) {
