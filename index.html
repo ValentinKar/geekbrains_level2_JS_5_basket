@@ -52,24 +52,17 @@
                 let text = $(`#${idReview}_review`).val();
                 comment.add(idUser, text);
             });
-            //Удаление отзыва
-            $('.del-comment').on('click', function () {
-                let idComment = parseInt($(`#${idReview}_delete`).val());
-                comment.remove(idComment);
-            });
-            //Одобрение отзыва
-            $('.appr-comment').on('click', function () {
-                let idComment = parseInt($(`#${idReview}_approve`).val());
-                comment.approve(idComment);
-            });
 
+                // 2. Для того, чтобы кнопки заработали, используйте делегаты.
                 //Удаление отзыва
-                $('.comment-delete').on('click', function () {
-                    alert('не хочет запускаться!');
+                $(document).on('click', '.comment-delete', function () {
+                    var idComment = parseInt($(this).attr('review-id-for-delete'));
+                    comment.remove(idComment);
                 });
                 //Одобрение отзыва
-                $('.comment-approve').on('click', function () {
-                    alert('не хочет запускаться!');
+                $(document).on('click', '.comment-approve', function () {
+                    var idComment = parseInt($(this).attr('review-id-for-approve'));
+                    comment.approve(idComment);
                 });
         });
     </script>

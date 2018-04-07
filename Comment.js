@@ -37,26 +37,6 @@ Comment.prototype.render = function ($root) {
       'data-id': this.id + '_add'
   });
 
-      let $deleteCommentButton = $('<div />');
-      $('<input />', {
-        id: this.id + '_delete',
-        value: '124'
-      }).appendTo($deleteCommentButton);
-      $('<button />', {
-          class: 'del-comment',
-          text: 'удалить отзыв по id'
-      }).appendTo($deleteCommentButton);
-
-  let $approveCommentButton = $('<div />');
-  $('<input />', {
-    id: this.id + '_approve',
-    value: '124'
-  }).appendTo($approveCommentButton);
-  $('<button />', {
-      class: 'appr-comment',
-      text: 'одобрить отзыв по id'
-  }).appendTo($approveCommentButton);
-
       let $reviewsDiv = $('<div />', {
           id: this.idDivForReviews
       });
@@ -64,8 +44,6 @@ Comment.prototype.render = function ($root) {
   $idUserInput.appendTo($commentDiv);
   $newReviewTextarea.appendTo($commentDiv);
   $reviewButtonAdd.appendTo($commentDiv);
-  $deleteCommentButton.appendTo($commentDiv);
-  $approveCommentButton.appendTo($commentDiv);
   $commentDiv.appendTo($root);
   $root.append('<hr />');
   $root.append('Отзывы: </p>');
@@ -106,11 +84,13 @@ Comment.prototype.showReviews = function () {
 
         let $goodBtnDelete = $('<button />', {
             class: 'comment-delete',
-            text: 'Удалить комментарий'
+            text: 'Удалить комментарий',
+            'review-id-for-delete': comment.id_comment
         });
           let $reviewApprove = $('<button />', {
               class: 'comment-approve',
-              text: 'Одобрить комментарий'
+              text: 'Одобрить комментарий',
+              'review-id-for-approve': comment.id_comment
           });
 
       $comentDiv.append('id comment: ' + comment.id_comment + '</p>');
@@ -124,16 +104,6 @@ Comment.prototype.showReviews = function () {
 
     });
     $dataDiv.appendTo(appendId);
-
-      $('.comment-delete').on('click', function () {
-          alert('Как определить обработчик событий для ' 
-            + 'этой кнопки(удаление) в файле index.html?');
-          // this.remove(124);
-      });
-    $('.comment-approve').on('click', function () {
-        alert('Как определить обработчик событий для ' 
-          + 'этой кнопки(одобрение) в файле index.html?');
-    });
 };
 
 Comment.prototype.findIndComment = function () {
