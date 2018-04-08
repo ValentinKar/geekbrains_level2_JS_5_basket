@@ -1,3 +1,9 @@
+/**
+ * Класс корзины.
+ * 
+ * @property {string} idBasket - ID который будет добавляться в 
+ * идентификаторы тегов.
+ */
 function Basket(idBasket) {
     this.id = idBasket;
 
@@ -28,6 +34,11 @@ Basket.prototype.render = function ($root) {
 
 };
 
+/**
+ * Метод запрашивает через ajax файл basket.json и получает 
+ * корзину пользователя.
+ *
+ */
 Basket.prototype.getBasket = function () {
     var appendId = '#' + this.id + '_items';
 
@@ -57,6 +68,14 @@ Basket.prototype.getBasket = function () {
     });
 };
 
+/**
+ * Метод добавляет товар в корзину, изменяет на странице кол-во товаров, 
+ * общую стоимость, также метод создает массив обьектов basketItem в который 
+ * вноситься идентификаторы товаров и их цены.
+ *
+ * @param idProduct Идентификатор товара
+ * @param price Цена товара
+ */
 Basket.prototype.add = function (idProduct, price) {
     var basketItem = {
       "id_product": idProduct,
@@ -69,6 +88,10 @@ Basket.prototype.add = function (idProduct, price) {
     this.refresh(); //Перерисовка корзины
 };
 
+/**
+ * Метод очищает тег с id basket_data, и перезаписывает кол-во и сумму.
+ *
+ */
 Basket.prototype.refresh = function () {
     var $basketDataDiv = $('#basket_data');
     $basketDataDiv.empty();
@@ -76,21 +99,38 @@ Basket.prototype.refresh = function () {
     $basketDataDiv.append('Общая стоимость: ' + this.amount + '</p>');
 };
 
-//ДЗ
+/**
+ * Метод удаляет товар из корзины, изменяет на странице кол-во товаров, 
+ * общую стоимость.
+ *
+ * @param idProduct Идентификатор удаляемого товара
+ */
 Basket.prototype.remove = function (idProduct) {
-  //TODO: Удаление товара из корзины
+  // поиск товара в корзине
   let goodNumber = this.find(idProduct);
 
+    // усли товар в корзине найден
     if(goodNumber) {
+      // удаление товара из массива с товарами
       this.basketItems.splice(goodNumber, 1);
+      // получение кол-ва оставшихся товаров и их сумма
       let result = this.summa(idProduct);
+      // суммарная стоимость товаров в корзине
       this.amount = result[1];
+      // кол-во товаров в корзине
       this.countGoods = result[0];
     }
 
   this.refresh(); //Перерисовка корзины
 };
 
+/**
+ * Метод ищет товар в корзине и возврашает его номер в массиве, 
+ * если нашел или false, если не нашел.
+ *
+ * @param id Идентификатор удаляемого товара
+ * @return Значение типа Number или типа Boolean(false)
+ */
 Basket.prototype.find = function (id) {
   let number = false;
 
@@ -102,6 +142,13 @@ Basket.prototype.find = function (id) {
   return number;
 };
 
+/**
+ * Метод получает из корзины с товарами их кол-во и  
+ * суммарную стоимость.
+ *
+ * @return Массив, где первый элемент - счетчик, а 
+ * второй - суммарная стоимость.
+ */
 Basket.prototype.summa = function () {
   let goodCount = 0;
   let goodSumma = 0;
